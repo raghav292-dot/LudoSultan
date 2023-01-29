@@ -1,0 +1,22 @@
+{
+  "StartAt": "lobbyTTL",
+  "States": {
+    "lobbyTTL": {
+      "Type": "Wait",
+      "Seconds": 60,
+      "Next": "CallLobbyLambda"
+    },
+    "CallLobbyLambda": {
+      "Type": "Task",
+      "Resource": "arn:aws:states:::lambda:invoke",
+      "Parameters": {
+        "FunctionName": "arn:aws:lambda:ap-south-1:455664674507:function:LobbyTTL",
+        "Payload": {
+          "uid.$": "$.user_id",
+          "conn_id.$": "$.connectionId"
+        }
+      },
+      "End": true
+    }
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "StartAt": "GamePlayTTL",
+  "States": {
+    "GamePlayTTL": {
+      "Type": "Wait",
+      "Seconds": 20,
+      "Next": "CallGamePlayTTLLambda"
+    },
+    "CallGamePlayTTLLambda": {
+      "Type": "Task",
+      "Resource": "arn:aws:states:::lambda:invoke",
+      "Parameters": {
+        "FunctionName": "arn:aws:lambda:ap-south-1:455664674507:function:GamePlayTTL",
+        "Payload": {
+          "uid.$": "$.user_id",
+          "conn_id.$": "$.connectionId"
+        }
+      },
+      "End": true
+    }
+  }
+}
